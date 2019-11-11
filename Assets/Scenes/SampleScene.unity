@@ -288,8 +288,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.19894034, y: 0.5607289, z: -0.14097564, w: 0.7912849}
-  m_LocalPosition: {x: -106.39, y: 65.76, z: -37.26}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -49.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -307,6 +307,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b5e19e157fd2301883674bcb8a0d8ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0.5
+  scrollSpeed: 100
 --- !u!1 &1889219774
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,9 +338,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 876332fe4aece1ec8b699ca9791a77d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundSize: 15
+  boundSize: 50
   goalPos: {x: 0, y: 0, z: 0}
-  _boidNum: 20
+  _boidNum: 100
   goalRefresh: 5
   boids: []
   boidPrefab: {fileID: 3532733978576652063, guid: 5f002cfc2346671dfb7f2fa0ea49784d,

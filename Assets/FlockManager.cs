@@ -39,6 +39,7 @@ public class FlockManager : MonoBehaviour
     {
         timer+= Time.deltaTime;
         if (timer >= goalRefresh) {
+            timer = 0;
             goalPos = Random.insideUnitSphere * Random.Range (1, boundSize);
         }
         // if (Random.Range (0,5) < 1)
