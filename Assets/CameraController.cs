@@ -26,7 +26,8 @@ public class CameraController : MonoBehaviour
         if (isRotating) transform.RotateAround (Vector3.zero, Vector3.up, (Input.mousePosition.x - initialX ) * Time.deltaTime * speed);
         if (Input.GetMouseButtonUp (0)) isRotating = false;
 
-        transform.localPosition += Vector3.forward * Input.mouseScrollDelta.y * Time.deltaTime * -scrollSpeed;
+        transform.localPosition += transform.forward * Input.mouseScrollDelta.y * Time.deltaTime * -scrollSpeed;
+
         transform.LookAt (Vector3.zero, Vector3.up);
     }
 }
