@@ -9,8 +9,7 @@ public class BoidAgent : MonoBehaviour
     [SerializeField] private float avoidanceDist = 1;
     [SerializeField] private float rotationSpeed = 1;
     private GameObject[] mBoids;
-    private Vector3 avoidDir;
-    private Vector3 stirDir;
+    
     [SerializeField] private int neighbourCount;
     private bool returning = false;
 
@@ -23,9 +22,9 @@ public class BoidAgent : MonoBehaviour
     //     Gizmos.color = new Color (1,1,1,0.1f);
     //     Gizmos.DrawSphere (transform.position, cohesionDist);
     // }
+    
     void Update()
     {
-        // Gizmos.DrawSphere (transform.position, cohesionDist);
         if (Vector3.Distance (transform.position, Vector3.zero) >= FlockManager.Instance.boundSize) returning = true;
         else returning = false;
 
@@ -33,7 +32,7 @@ public class BoidAgent : MonoBehaviour
             Vector3 distance = Vector3.zero - transform.position;
             transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (distance), rotationSpeed * Time.deltaTime);
         } else {
-            // if (Random.Range (0,5) < 1) ApplyRules ();
+            if (Random.Range (0,5) < 1) ApplyRules ();
             ApplyRules ();
         }
 
@@ -42,11 +41,15 @@ public class BoidAgent : MonoBehaviour
     }
 
     private void ApplyRules () {
+        Vector3 avoidDir = Vector3.zero;
+        Vector3 stirDir = Vector3.zero;
         Vector3 cohesionDir = Vector3.zero;
         Vector3 avgForward = Vector3.zero;
+
         float distance = 0;
         float avgSpeed = 0.1f;
         neighbourCount = 0;
+        
         Vector3 goalPos = FlockManager.Instance.goalPos;
 
         foreach (var boid in mBoids)
@@ -74,7 +77,7 @@ public class BoidAgent : MonoBehaviour
             cohesionDir = cohesionDir/neighbourCount + (goalPos - transform.position);
             speed = avgSpeed / neighbourCount;
             speed = Mathf.Clamp (speed, 0, 10);
-            stirDir = (cohesionDir + avoidDir + avgForward) - transform.position;
+            stirDir = (cohesionDir + avoidDir * 1000 + avgForward) - transform.position;
             if (stirDir != Vector3.zero) {
                 transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (stirDir), Time.deltaTime * rotationSpeed);
             }
