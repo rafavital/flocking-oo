@@ -4,24 +4,22 @@ using UnityEngine;
 
 public class BoidAgent : MonoBehaviour
 {
-    public float speed = 10;
+    [SerializeField] private float initialSpeed = 5;
+    [SerializeField] private float maxSpeed = 10;
     [SerializeField] private float cohesionDist = 2;
     [SerializeField] private float avoidanceDist = 1;
     [SerializeField] private float rotationSpeed = 1;
     private GameObject[] mBoids;
+    private float speed;
     
     [SerializeField] private int neighbourCount;
     private bool returning = false;
 
     void Start()
     {
+        speed = initialSpeed;
         mBoids = FlockManager.Instance.boids;
     }
-
-    // private void OnDrawGizmos() {
-    //     Gizmos.color = new Color (1,1,1,0.1f);
-    //     Gizmos.DrawSphere (transform.position, cohesionDist);
-    // }
     
     void Update()
     {
@@ -44,7 +42,7 @@ public class BoidAgent : MonoBehaviour
         Vector3 avoidDir = Vector3.zero;
         Vector3 stirDir = Vector3.zero;
         Vector3 cohesionDir = Vector3.zero;
-        Vector3 avgForward = Vector3.zero;
+        Vector3 allignDir = Vector3.zero;
 
         float distance = 0;
         float avgSpeed = 0.1f;
@@ -52,36 +50,38 @@ public class BoidAgent : MonoBehaviour
         
         Vector3 goalPos = FlockManager.Instance.goalPos;
 
-        foreach (var boid in mBoids)
+        foreach (var neighbour in mBoids)
         {
-            if (boid != gameObject) {
+            if (neighbour != gameObject) {
 
-                distance = Vector3.Distance (boid.transform.position, transform.position);
+                distance = Vector3.Distance (neighbour.transform.position, transform.position);
             
                 if (distance <= cohesionDist) {
                     neighbourCount ++;  
-                    Debug.DrawLine (transform.position, boid.transform.position, new Color (1,1,1,0.5f));
-                    cohesionDir += boid.transform.position;
-                    avgForward += boid.transform.forward;
+                    Debug.DrawLine (transform.position, neighbour.transform.position, new Color (1,1,1,0.5f));
+                    cohesionDir += neighbour.transform.position;
+                    allignDir += neighbour.transform.forward;
                     if (distance <= avoidanceDist) {
-                        avoidDir += transform.position - boid.transform.position;
+                        avoidDir += transform.position - neighbour.transform.position;
                     }
 
-                    avgSpeed += boid.GetComponent <BoidAgent> ().speed;
+                    avgSpeed += neighbour.GetComponent <BoidAgent> ().speed;
                 } 
             }
         }
 
         if (neighbourCount > 0) {
-
+            //Ajuste da direção de coesão e alinhamento
             cohesionDir = cohesionDir/neighbourCount + (goalPos - transform.position);
-            speed = avgSpeed / neighbourCount;
-            speed = Mathf.Clamp (speed, 0, 10);
-            stirDir = (cohesionDir + avoidDir * 1000 + avgForward) - transform.position;
-            if (stirDir != Vector3.zero) {
-                transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (stirDir), Time.deltaTime * rotationSpeed);
-            }
+            allignDir = allignDir/neighbourCount;
 
+            //Ajuste da velocidade média do agente
+            speed = avgSpeed / neighbourCount;
+            speed = Mathf.Clamp (speed, 0, maxSpeed);
+
+            //Correção do vetor de movimento do agente
+            stirDir = (cohesionDir + avoidDir + allignDir) - transform.position;
+            transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (stirDir), Time.deltaTime * rotationSpeed);
         }
 
     }

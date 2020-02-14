@@ -44,9 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e18dc38093ac9b10da2be8aa378b1e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  cohesionDist: 4
-  avoidanceDist: 2
+  initialSpeed: 5
+  maxSpeed: 10
+  cohesionDist: 3
+  avoidanceDist: 1.5
   rotationSpeed: 1
   neighbourCount: 0
 --- !u!1 &5073776855124479868
