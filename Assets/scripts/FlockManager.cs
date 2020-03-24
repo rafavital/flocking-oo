@@ -9,10 +9,9 @@ public class FlockManager : MonoBehaviour
         if (Instance!= this) Destroy (Instance);
         if (Instance == null) Instance =  this;
     }
-    public static int boidNum;
+    public int boidNum = 100;
     public float boundSize = 5;
     [HideInInspector] public Vector3 goalPos;
-    [SerializeField] private int _boidNum = 10;
     [SerializeField] private float goalRefresh = 5;
     public GameObject[] boids;
     [SerializeField] private GameObject boidPrefab = null;
@@ -21,7 +20,6 @@ public class FlockManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        boidNum = _boidNum;
         boids = new GameObject[boidNum];
         for (int i = 0; i < boidNum; i++)
         {

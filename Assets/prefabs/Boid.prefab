@@ -169,25 +169,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: anime1
       objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: 92ba8bed5895da7539d140782a303612,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 92ba8bed5895da7539d140782a303612,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.075163364
+      value: -0.263
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 92ba8bed5895da7539d140782a303612,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.571
+      value: -0.307
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 92ba8bed5895da7539d140782a303612,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.238
+      value: -0.001
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 92ba8bed5895da7539d140782a303612,
         type: 3}
